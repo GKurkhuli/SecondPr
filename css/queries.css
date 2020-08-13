@@ -6,60 +6,47 @@
         width: 90%;
     }
     
-    #search,
-    #agentHeader
+    .search,
+    .agentHeader
     {
         margin-left: 4%;
     }    
-    #search{ width: 95%;}
-    #search-icon{ left: 2%; }
+    .search{ width: 95%;}
+    .search-icon{ left: 2%; }
     
     table{
         margin-left:3%;
         width: 94%;
         font-size: 90%;
     }
-
-    .online .status,
-    .status{
-        width: 20px;
-     }
-    .online .status::before,
-    .status::before{ content: "O";}
-       
-
-}
-@media(max-width: 600px){
-    table{
-        margin-left: 0;
-        width: 100%;
-    }
     tr{
+        width: 600px;
         height: 40px;
         border-radius: 20px;
     }
-    .transferB{
-        width: 80px;
-        height: 20px;
-        border-radius: 10px;
+    .online:hover{
+        box-shadow: 0 7px 21px 0 #eaeaeb;
+        border-radius: 27px;
     }
-    .avatar{
-        width: 30px;
-        height: 30px;
-        border-radius: 15px;
-        margin:5px 10px 5px 10px;
-    }
+    .name{width: 155px;}
+    .status{width: 65px;}
     .serving-not{
-        margin-left: 10px;
+        width: 85px;
+        margin-left: 30px;
     }
-    .department
-    {
-        width: 130px;
+    .transferB{
+        width: 125px;
+        height: 34px;
+        border-radius: 17px;
+        top: 3px;
     }
-   
 }
 
 @media(max-width: 500px){
+    table{
+        margin: 0;
+        width: 100%;
+    }
     html{font-size: 14px;}
     .Transfer{
         width: 95%;
@@ -67,18 +54,18 @@
         text-align: center;
     }
 
-    #searchbox input{width: 70%;}
     .conversation{font-size: 100%;}
-    #searchbox input{
+    .searchbox{
         font-size: 90%;
+        width: 70%;
     }
-    .TransferButton button{
+    .TransferButton{
         width: 130px;
         height: 44px;
         border-radius: 22px;
     }
     
-    .TransferButton button:hover{
+    .TransferButton:hover{
         width: 147px;
         height: 50px;
         border-radius: 25px;

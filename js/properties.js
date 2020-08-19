@@ -41,7 +41,8 @@ function agentTable(){
             '<td class="status"></td>'+
             '<td class="department">'+ departments[Math.floor(Math.random()*departments.length)] +'</td>';               
 
-        var tdButton = '<button class="transferB">Transfer</button>';
+        var tdButton = '<button class="transferB" id = "row_' + i + '_B">Transfer</button>';
+                        //each button has an id so it will be easier for back developer to connect users (it can be changed easy)
         if(status === "offline"){
 
 
@@ -52,6 +53,7 @@ function agentTable(){
             tbody.innerHTML += "<tr class='online' id='row_"+ i + "'>" + tr + "</tr>";
         }
     }
+
 }
 
 ////////////////////////////////////////////////////
@@ -63,21 +65,26 @@ function randomStatus()
     for(var i = 0; i < agents;  i++)
     {
         tr = document.querySelector('#row_'+i);
-        service = document.querySelector('#row_'+i+'_ div' ); //get to specific row,column
-        transferB = document.querySelector('#row_'+i+' .transferB')
+        service = document.querySelector('#row_'+i+'_ .serving-not'); //get to specific row,column
+    //    transferB = document.querySelector('#row_'+i+' .transferB')
 
         if(Math.round(Math.random())){//if 1
             tr.setAttribute("class","online");
-            service.innerHTML = 'Serving '+ Math.floor(Math.random()*10);
+            service.innerText = 'Serving '+ Math.floor(Math.random()*10);
         }
         else{//if 0
             tr.removeAttribute("class","online");
             service.innerHTML = 'Not serving</div>';
+            /*
             transferB.style.display = "none";
             service.style.display = "block";
+            */
+           $('#row_'+i+'_B').hide("fast");
+           $('#row_'+i+'_ div').show("fast");
         }
 
     }
+    CheckStatus(); ///////////////////////REMOVE AFTER UNDERSTANDING WHAT TO DO
 }    
     
 ///////////////////////////////////////////////
@@ -103,20 +110,50 @@ searchBox.oninput = function(){
 
 //////////////////////////////////////////////
     /*---Online/Offline/All---*/
-$('#checkAttend').click(function(){    
-    if(button.style.backgroundColor === 'rgb(255, 255, 255)')
-    {
-        button.style.backgroundColor = "rgb(46, 202, 23)";
-    }
-    else if(button.style.backgroundColor === "rgb(46, 202, 23)")
-    {
-        button.style.backgroundColor = "rgb(186, 196, 222)";
-    }
-    else
-    {
-        button.style.backgroundColor = "rgb(255, 255, 255)";
-    }
+$('#checkAttend').click(function(){     //change button colors according to requirements
+    if(button.style.backgroundColor === 'rgb(255, 255, 255)')       button.style.backgroundColor = "rgb(46, 202, 23)";
+    else if(button.style.backgroundColor === "rgb(46, 202, 23)")    button.style.backgroundColor = "rgb(186, 196, 222)";
+    else                                                            button.style.backgroundColor = "rgb(255, 255, 255)";
+ 
+    CheckStatus();
 });
+
+/////////////////////////////////////////////////////////////////////////////////
+
+/*---IMPORTANT!!!  --  FIND OUT HOW TO CONTROL tr class changed---*/
+
+///////////////////////////////////////////////////////////////////////////////
+
+function CheckStatus()//hide and show table rows according to requirements
+{
+    if(button.style.backgroundColor === 'rgb(255, 255, 255)')//show all
+    {
+        for(var i = 0; i < agents; i++)
+        {
+            $('#row_' + i).show("fast");
+        }
+    }
+    else if(button.style.backgroundColor === "rgb(46, 202, 23)")//show online only
+    {
+        for(var i = 0; i < agents; i++)
+        {
+            if(document.querySelector('#row_' + i).classList.contains("online"))
+                $('#row_' + i).show(300);
+            else
+                $('#row_' + i).hide(300);
+        }
+    }
+    else//show offline only
+    {
+        for(var i = 0; i < agents; i++)
+        {
+            if(document.querySelector('#row_' + i).classList.contains("online"))
+                $('#row_' + i).hide(300);
+            else
+                $('#row_' + i).show(300);
+        }
+    }
+}
 /*All #ffffff rgb(255, 255, 255)Offline #bac4de rgb(186, 196, 222)Online #2eca17 rgb(46, 202, 23)*/
 ///////////////////////////////////////////
 /*--- Main function and Code---*/
@@ -153,4 +190,10 @@ $('tr').hover(
         }
     }
 );
+
+                                /*---PROBLEM---*/
+    /*With .hide() and .show(), instead of style.display = "none"/"block",
+        when hovering directly under button, staying on border toggles
+        between cursor in/out effects automatically
+    */
 });
